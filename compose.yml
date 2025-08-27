@@ -46,15 +46,15 @@ services:
   # ===============================
   # Bancos NoSQL (Mongo)
   # ===============================
-  catalog_db:
+  stock_db:
     image: mongo
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: catalog_db
+      MONGO_INITDB_ROOT_USERNAME: stock_db
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
-      - catalog_db:/data/db
+      - stock_db:/data/db
     networks:
       - coffeehub_net
 
@@ -132,7 +132,7 @@ volumes:
   user_db:
   order_db:
   payment_db:
-  catalog_db:
+  stock_db:
   delivery_db:
   notification_db:
   pgadmin:
