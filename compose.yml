@@ -1,0 +1,147 @@
+version: "3.9"
+
+services:
+  # ===============================
+  # Bancos Relacionais (Postgres)
+  # ===============================
+  user_db:
+    image: postgres:17-alpine
+    ports:
+      - "5433:5432"   # localhost:5433
+    environment:
+      POSTGRES_USER: user_db
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: user_db
+    volumes:
+      - user_db:/var/lib/postgresql/data
+    networks:
+      - coffeehub_net
+
+  order_db:
+    image: postgres:17-alpine
+    ports:
+      - "5434:5432"   # localhost:5434
+    environment:
+      POSTGRES_USER: order_db
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: order_db
+    volumes:
+      - order_db:/var/lib/postgresql/data
+    networks:
+      - coffeehub_net
+
+  payment_db:
+    image: postgres:17-alpine
+    ports:
+      - "5435:5432"   # localhost:5435
+    environment:
+      POSTGRES_USER: payment_db
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: payment_db
+    volumes:
+      - payment_db:/var/lib/postgresql/data
+    networks:
+      - coffeehub_net
+
+  # ===============================
+  # Bancos NoSQL (Mongo)
+  # ===============================
+  catalog_db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: catalog_db
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - catalog_db:/data/db
+    networks:
+      - coffeehub_net
+
+  delivery_db:
+    image: mongo
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: delivery_db
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - delivery_db:/data/db
+    networks:
+      - coffeehub_net
+
+  notification_db:
+    image: mongo
+    ports:
+      - "27019:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: notification_db
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - notification_db:/data/db
+    networks:
+      - coffeehub_net
+
+  # ===============================
+  # Infraestrutura de Mensageria/Cache
+  # ===============================
+  rabbitmq:
+    image: rabbitmq:4-alpine
+    ports:
+      - "5672:5672"     # conexão apps
+      - "15672:15672"   # painel web
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    restart: unless-stopped
+    networks:
+      - coffeehub_net
+
+  redis:
+    image: redis:8-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    networks:
+      - coffeehub_net
+
+  # ===============================
+  # Ferramentas de Admin/Dev
+  # ===============================
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    networks:
+      - coffeehub_net
+
+# ===============================
+# Volumes
+# ===============================
+volumes:
+  user_db:
+  order_db:
+  payment_db:
+  catalog_db:
+  delivery_db:
+  notification_db:
+  pgadmin:
+  rabbitmq-data:
+  redis:
+
+# ===============================
+# Rede
+# ===============================
+networks:
+  coffeehub_net:
+    driver: bridge
