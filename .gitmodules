@@ -1,3 +1,18 @@
 [submodule "ch_user"]
 	path = ch_user
 	url = https://github.com/CodeLabDevlopment/ch_user.git
+[submodule "ch_catalog"]
+	path = ch_catalog
+	url = https://github.com/CodeLabDevlopment/ch_catalog.git
+[submodule "ch_delivery"]
+	path = ch_delivery
+	url = https://github.com/CodeLabDevlopment/ch_delivery.git
+[submodule "ch_notification"]
+	path = ch_notification
+	url = https://github.com/CodeLabDevlopment/ch_notification.git
+[submodule "ch_order"]
+	path = ch_order
+	url = https://github.com/CodeLabDevlopment/ch_order.git
+[submodule "ch_payment"]
+	path = ch_payment
+	url = https://github.com/CodeLabDevlopment/ch_payment.git
