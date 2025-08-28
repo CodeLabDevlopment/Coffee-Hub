@@ -86,7 +86,7 @@ services:
   # Infraestrutura de Mensageria/Cache
   # ===============================
   rabbitmq:
-    image: rabbitmq:4-alpine
+    image: rabbitmq:3-management
     ports:
       - "5672:5672"     # conexão apps
       - "15672:15672"   # painel web
@@ -96,8 +96,6 @@ services:
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
     restart: unless-stopped
-    networks:
-      - coffeehub_net
 
   redis:
     image: redis:8-alpine
