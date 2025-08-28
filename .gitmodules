@@ -16,3 +16,6 @@
 [submodule "ch_payment"]
 	path = ch_payment
 	url = https://github.com/CodeLabDevlopment/ch_payment.git
+[submodule "ch_stock"]
+	path = ch_stock
+	url = https://github.com/CodeLabDevlopment/ch_stock.git
